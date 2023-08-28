@@ -17,8 +17,11 @@ set wildmenu
 set ignorecase
 set smartcase
 set autochdir
+set noeb
+set belloff=all
 " disable ominicomplete preview
-" set completeopt-=preview
+set completeopt-=preview
+nnoremap gr :GoReferrers<CR>
 
 " tablength exceptions
 autocmd FileType html setlocal shiftwidth=2 tabstop=2
@@ -49,13 +52,16 @@ let s:clang_library_path='/Applications/Xcode.app/Contents/Developer/Toolchains/
 if isdirectory(s:clang_library_path)
     let g:clang_library_path=s:clang_library_path
 endif
-let s:clang_library_path='/Library/Developer/CommandLineTools/usr/lib'
-if isdirectory(s:clang_library_path)
-    let g:clang_library_path=s:clang_library_path
-endif
 
 let g:go_fmt_command = "goimports"
 
 let g:airline#extensions#tabline#enabled = 1
 
+call pathogen#infect()
+syntax on
+filetype plugin indent on
+
 let g:ale_completion_enabled = 1
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+hi comment ctermfg=6
