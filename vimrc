@@ -64,4 +64,21 @@ filetype plugin indent on
 let g:ale_completion_enabled = 1
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-hi comment ctermfg=6
+
+if has('termguicolors')
+    set termguicolors
+endif
+if has('gui_running')
+    set background=light
+else
+    set background=dark
+endif
+let &t_ZH="\e[3m"
+let &t_ZR="\e[23m"
+
+" let g:gruvbox_material_disable_italic_comment = 1
+
+" Be compatible with transparent terminals
+" https://stackoverflow.com/questions/37712730/set-vim-background-transparent
+hi Normal guibg=NONE ctermbg=NONE
+hi EndOfBuffer guibg=NONE ctermbg=NONE
